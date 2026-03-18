@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 import uuid
 from db import make_connection
-from collections import defaultdict
+
 
 
 def normalize_string(value: str) -> str: # a function that accepts a string to strip its whitespace from beginning and end and return it as string....
@@ -88,11 +88,11 @@ def update_expense(expense_id: str , updated_data: dict):
             raise ValueError("Invalid field")
         # normalization...
         if field== "item":
-            value=normalize_string
+            value=normalize_string(value)
         elif field=="paid_on":
             value=value.isoformat()
         elif field=="category":
-            value=normalize_category
+            value=normalize_category(value)
 
 
         set_clauses.append(f"{field}=?")

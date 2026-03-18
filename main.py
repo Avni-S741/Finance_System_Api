@@ -40,7 +40,7 @@ def update_expense_api(expense_id:str , updated_data: UpdateExpenseModel):
         update_expense(expense_id,
                        updated_data.dict(exclude_unset=True)
                        )
-        return {"message": "message updated successfully!!"}
+        return {"message": "Expense updated successfully!!"}
     except ValueError as e:
         raise HTTPException(status_code=404,detail=str(e))
     
@@ -66,7 +66,7 @@ def read_expenses():
     return get_all_expenses()
 
 @app.get("/expenses/{expense_id}", response_model=ExpenseResponse)
-def read_expenses(expense_id:str):
+def read_expensebyid(expense_id:str):
     expense=get_expense_by_id(expense_id)
 
     if not expense:

@@ -1,0 +1,103 @@
+~FINANCE SYSTEM API~
+
+Basic CRUD operations:
+                    -Add expense
+                    -Update expense
+                    -Get expense
+                    -Delete expense 
+
+
+
+Additional features for UX:
+                    -Soft Delete (Data will be hidden instead of being completely removed...)
+                    -Restore Expense (Expense can be restored after deletion)
+                    -Get Expense by id
+                    -Category-wise Summary(Provide total spent per category)
+                    -Data Validation
+                    -Database interaction using SQL
+
+
+
+API Endpoints:
+-POST /expenses → Add new expense
+-PATCH /expenses/{id} → Update expense
+-DELETE /expenses/{id} → Soft delete
+-POST /expenses/{id}/restore → Restore expense
+-GET /expenses → Get all active expenses
+-GET /expenses/{id} → Get specific expense
+-GET /summary → Get total + category-wise spending
+
+
+
+Logic:
+Client Request → FastAPI Route → Pydantic Validation → Business Logic → Database Operation → Response
+
+
+
+Tech Stack:
+-FastAPI → API framework for handling routes and requests
+-SQLite → Lightweight database for storing expenses
+-Pydantic → Data validation and schema enforcement
+
+
+
+Framework:
+-FastAPI-> Handles API creation, routing, and request/response cycle....
+
+
+
+Libraries Used:
+sqlite3 → Database connection and SQL operations
+uuid → Generates unique IDs for each expense
+datetime → Handles timestamps (created_at, updated_at, deleted_at)
+typing (List, Optional) → Type hinting for better validation and clarity
+collections → Used for grouping and summary calculations
+
+
+
+Classes / Components Used:
+->From FastAPI:-
+  FastAPI → Creates the application instance
+  HTTPException → Handles API error responses
+
+->From Pydantic:-
+  BaseModel → Defines request and response schemas
+
+->From Custom Schemas:-
+  ExpenseCreate → Input model for creating expense
+  ExpenseResponse → Output model for API responses
+  UpdateExpenseModel → Model for partial updates
+
+->From Database Layer:-
+  sqlite3.Connection → Manages database connection
+  sqlite3.Cursor → Executes SQL queries
+    
+
+
+Database Design:
+Table: expensestore
+->Fields:
+  id → Unique identifier (UUID)
+  amount → Expense amount
+  item → Item name
+  paid_on → Date of expense
+  category → Expense category
+  deleted → Soft delete flag (0 or 1)
+  created_at → Creation timestamp
+  updated_at → Last updated timestamp
+  deleted_at → Deletion timestamp
+
+
+
+Special Features:-
+->Soft Delete-
+  Marks expense as deleted instead of removing it
+  deleted = 1, deleted_at is set
+
+->Restore Feature-
+  Restores deleted expense
+  Sets deleted = 0 and clears deleted_at
+
+->Summary Calculation
+  Groups expenses by category
+  Calculates total spending

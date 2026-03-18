@@ -41,6 +41,11 @@ Tech Stack:
 
 
 
+Server:
+-Uvicorn->ASGI server used to run the FastAPI application locally.
+
+
+
 Framework:
 -FastAPI-> Handles API creation, routing, and request/response cycle....
 
